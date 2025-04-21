@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,16 +16,62 @@ class myApp extends StatefulWidget {
 class _myAppState extends State<myApp> {
   final List<Map<String, dynamic>> perguntas = [
     {
-      'pergunta': 'Qual é a capital do Brasil?',
-      'opcoes': ['São Paulo', 'Brasília', 'Rio de Janeiro'],
-      'respostaCorreta': 'Brasília',
+      'pergunta': 'Qual das seguintes marcas é de um carro?',
+      'opcoes': ['Fiat', 'Honda', 'Kawasaki'],
+      'respostaCorreta': 'Fiat'
     },
+    {
+      'pergunta': 'Qual das seguintes marcas é de uma moto?',
+      'opcoes': ['Volkswagen', 'Chevrolet', 'Kawasaki'],
+      'respostaCorreta': 'Kawasaki',
+    },
+    {
+      'pergunta': 'Quantos planetas fazem parte do sistema solar ?',
+      'opcoes': ['6', '8', '9'],
+      'respostaCorreta': '8'
+    },
+    {
+      'pergunta': 'Bivolt, refere-se a algo que é carregado em',
+      'opcoes': ['tomadas com ambas voltagens', 'tomadas com voltagem de 110v', 'tomadas com voltagem de 220v'],
+      'respostaCorreta': 'tomadas com ambas voltagens'
+    },
+    {
+      'pergunta': 'Qual a capital do Ceará?',
+      'opcoes': ['Fortaleza', 'Crato', 'Caucaia'],
+      'respostaCorreta': 'Fortaleza'
+    },
+    {
+      'pergunta': 'Qual a capital do Brasil?',
+      'opcoes': ['Brasília', 'São Paulo', 'Rio de Janeiro'],
+      'respostaCorreta': 'Brasília'
+    },
+    {
+      'pergunta': 'No "Minecraft", se você mistura água e lava, gera o quê?',
+      'opcoes': ['pedregulho', 'terra', 'terracota'],
+      'respostaCorreta': 'pedregulho'
+    },
+    {
+      'pergunta': 'Qual a forma molecular da água?',
+      'opcoes': ['H₂O', 'C₂H₆O', 'CH₄'],
+      'respostaCorreta': 'H₂O'
+    },
+    {
+      'pergunta': 'O Ceará fica na região',
+      'opcoes': ['Norte', 'Nordeste', 'Sul'],
+      'respostaCorreta': 'Nordeste'
+    },
+    {
+      'pergunta': 'O presidente Lula tem nas mãos',
+      'opcoes': ['8 dedos', '9 dedos', '10 dedos'],
+      'respostaCorreta': '9 dedos'
+    }
   ];
   //inicializa os valores do quiz
   int perguntaAtual = 0;
   int pontos = 0;
   String? mensagem;
   bool quizFinalizado = false;
+  File file = File('/images/joia.jpeg');
 
   //função que verifica a resposta
   void verificarResposta(String respostaEscolhida) {
@@ -92,7 +140,7 @@ class _myAppState extends State<myApp> {
           ) : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network('link-da-imagem.com', width: 100, height: 100),
+              Image.asset('assets/images/joia.jpeg', height: 300, width: 300),
               SizedBox(height: 20),
               Text(
                 perguntas[perguntaAtual]['pergunta'],
