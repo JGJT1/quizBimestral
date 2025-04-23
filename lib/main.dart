@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,52 +16,62 @@ class _myAppState extends State<myApp> {
     {
       'pergunta': 'Qual das seguintes marcas é de um carro?',
       'opcoes': ['Fiat', 'Honda', 'Kawasaki'],
-      'respostaCorreta': 'Fiat'
+      'respostaCorreta': 'Fiat',
+      'imagem': 'mcqueen.jfif'
     },
     {
       'pergunta': 'Qual das seguintes marcas é de uma moto?',
       'opcoes': ['Volkswagen', 'Chevrolet', 'Kawasaki'],
       'respostaCorreta': 'Kawasaki',
+      'imagem': 'moto.jfif'
     },
     {
       'pergunta': 'Quantos planetas fazem parte do sistema solar ?',
       'opcoes': ['6', '8', '9'],
-      'respostaCorreta': '8'
+      'respostaCorreta': '8',
+      'imagem': 'espaco.jfif'
     },
     {
       'pergunta': 'Bivolt, refere-se a algo que é carregado em',
       'opcoes': ['tomadas com ambas voltagens', 'tomadas com voltagem de 110v', 'tomadas com voltagem de 220v'],
-      'respostaCorreta': 'tomadas com ambas voltagens'
+      'respostaCorreta': 'tomadas com ambas voltagens',
+      'imagem': 'eletrecidade.jfif'
     },
     {
       'pergunta': 'Qual a capital do Ceará?',
       'opcoes': ['Fortaleza', 'Crato', 'Caucaia'],
-      'respostaCorreta': 'Fortaleza'
+      'respostaCorreta': 'Fortaleza',
+      'imagem': 'brasil.jfif'
     },
     {
       'pergunta': 'Qual a capital do Brasil?',
       'opcoes': ['Brasília', 'São Paulo', 'Rio de Janeiro'],
-      'respostaCorreta': 'Brasília'
+      'respostaCorreta': 'Brasília',
+      'imagem': 'brasil 2.jfif'
     },
     {
       'pergunta': 'No "Minecraft", se você mistura água e lava, gera o quê?',
       'opcoes': ['pedregulho', 'terra', 'terracota'],
-      'respostaCorreta': 'pedregulho'
+      'respostaCorreta': 'pedregulho',
+      'imagem': 'minecraft.jfif'
     },
     {
       'pergunta': 'Qual a forma molecular da água?',
       'opcoes': ['H₂O', 'C₂H₆O', 'CH₄'],
-      'respostaCorreta': 'H₂O'
+      'respostaCorreta': 'H₂O',
+      'imagem': 'quimica.jfif'
     },
     {
       'pergunta': 'O Ceará fica na região',
       'opcoes': ['Norte', 'Nordeste', 'Sul'],
-      'respostaCorreta': 'Nordeste'
+      'respostaCorreta': 'Nordeste',
+      'imagem': 'ceara.jfif'
     },
     {
       'pergunta': 'O presidente Lula tem nas mãos',
       'opcoes': ['8 dedos', '9 dedos', '10 dedos'],
-      'respostaCorreta': '9 dedos'
+      'respostaCorreta': '9 dedos',
+      'imagem': 'lula.jfif'
     }
   ];
   //inicializa os valores do quiz
@@ -71,7 +79,14 @@ class _myAppState extends State<myApp> {
   int pontos = 0;
   String? mensagem;
   bool quizFinalizado = false;
-  File file = File('/images/joia.jpeg');
+  String imagem = '';
+  final String prefixo = 'assets/images/';
+
+  @override
+  void initState() {
+    super.initState();
+    imagem = prefixo + perguntas[perguntaAtual]['imagem'];
+  }
 
   //função que verifica a resposta
   void verificarResposta(String respostaEscolhida) {
@@ -85,18 +100,24 @@ class _myAppState extends State<myApp> {
         mensagem = 'Resposta errada!';
       }
     });
+
+
     //espera 2 segundos e passa para a próxima pergunta
 
    Future.delayed(Duration(seconds: 2), () {
     setState(() {
       mensagem = null;
-      if(perguntaAtual < perguntas.length - 1){
-        perguntaAtual++;
-      } else {
-        quizFinalizado = true;
-      }
+        if(perguntaAtual < perguntas.length - 1){
+          perguntaAtual++;
+        } else {
+          quizFinalizado = true;
+        }
+      });
     });
-  });
+      //muda a variável da imagem
+    if (perguntaAtual + 1 <= perguntas.length - 1){
+      imagem = prefixo + perguntas[perguntaAtual+1]['imagem'];
+    }
   }//fim do método anteior
 
   
@@ -117,7 +138,17 @@ class _myAppState extends State<myApp> {
       theme:ThemeData.dark(),
       darkTheme: ThemeData.dark(),
       home: Scaffold(
-        appBar: AppBar(title: Text('Quiz flutter')),
+        backgroundColor: const Color.fromARGB(255, 0, 81, 119),
+        appBar: AppBar(title: Text(
+            'Quiz flutter', 
+            style: TextStyle(
+              color: Color.fromARGB(255, 0, 0, 0),
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Arial',
+              fontSize: 35
+            ),
+          ), 
+          backgroundColor: Color.fromARGB(255, 255, 255, 255)),
         body: Center(
           child: quizFinalizado ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -140,10 +171,14 @@ class _myAppState extends State<myApp> {
           ) : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/joia.jpeg', height: 300, width: 300),
+              Image.asset(imagem, height: 300, width: 300),
               SizedBox(height: 20),
               Text(
-                perguntas[perguntaAtual]['pergunta'],
+                style: TextStyle(
+                  fontFamily: 'Arial',
+                  fontSize: 30
+                )
+                ,perguntas[perguntaAtual]['pergunta'],
                 textAlign: TextAlign.center
               ),
               SizedBox(height: 20),
