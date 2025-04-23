@@ -112,12 +112,13 @@ class _myAppState extends State<myApp> {
         } else {
           quizFinalizado = true;
         }
-      });
+      if (perguntaAtual + 1 <= perguntas.length - 1){
+        imagem = prefixo + perguntas[perguntaAtual+1]['imagem'];
+      }
     });
+  });
       //muda a variável da imagem
-    if (perguntaAtual + 1 <= perguntas.length - 1){
-      imagem = prefixo + perguntas[perguntaAtual+1]['imagem'];
-    }
+
   }//fim do método anteior
 
   
